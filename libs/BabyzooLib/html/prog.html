@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Somfy Programmierung</title>
+<script src="somfyConfig.js" ></script>
+<script type="text/javascript" >
+var numOfChannels=0;
+var somfyGroup = "";
+function mr_loadConfig ()
+{
+	somfyGroup = somfyConfig;
+	getNumberOfChannels();
+	var elmt;
+	var txt;
+	var att;
+	
+	for(var i = 1; i <= numOfChannels; i++)
+	{
+		elmt = document.createElement("text");
+		txt = document.createTextNode("channel: " + i.toString());
+		elmt.appendChild(txt);
+		document.body.appendChild(elmt);
+	
+		elmt = document.createElement("br"); 
+		document.body.appendChild(elmt);
+	
+		elmt = document.createElement("button");        // button
+		txt = document.createTextNode("prog");       
+		elmt.appendChild(txt);                                
+
+		att = document.createAttribute("class");       // style
+		att.value = "button_style";    
+		elmt.setAttributeNode(att);
+
+		att = document.createAttribute("onclick");       // onclick
+		att.value = "my_click(" + i.toString() + ")";    
+		elmt.setAttributeNode(att);
+
+		document.body.appendChild(elmt); 
+
+	
+		elmt = document.createElement("br"); 
+		document.body.appendChild(elmt);
+	
+	
+		elmt = document.createElement("br"); 
+		document.body.appendChild(elmt);
+	}
+	initializeAJAX();
+}
+
+function initializeAJAX()
+{
+	// Request erzeugen
+	if (window.XMLHttpRequest) {
+		myAjax = new XMLHttpRequest(); // Mozilla, Safari, Opera
+	} else if (window.ActiveXObject) {
+		try {
+			myAjax = new ActiveXObject('Msxml2.XMLHTTP'); // IE 5
+		} catch (e) {
+			try {
+				myAjax = new ActiveXObject('Microsoft.XMLHTTP'); // IE 6
+			} catch (e) {}
+		}
+	}
+}
+
+
+function getNumberOfChannels()
+{
+	
+	var maxFound = false;
+	var count = 0;
+	while (maxFound == false)
+	{
+		count++;
+		if  (("channel" + count.toString() in somfyGroup)==true){
+			numOfChannels++;
+		}
+		else
+		{
+			maxFound = true;
+		}
+	}
+
+}
+
+function my_click(channel)
+{
+	console.log("channel: " + channel);
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=program" + "&channel=" + channel + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+
+}
+
+function responseCheck() 
+{
+	 if (myAjax.readyState==4 && myAjax.status==200)
+	{
+		 	var response = JSON.parse(myAjax.responseText);
+		if (response.status == "OK_program"){
+			document.getElementById('status').setAttribute("class","status_btn1");
+		}; 
+	}
+}
+
+
+</script>
+<style>
+    .button_style {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 3px 5px;
+    border: 1px solid #000;
+    background: #eee;
+}
+
+.status_btn1 {
+
+  background: #81db34;
+  background-image: -webkit-linear-gradient(top, #81db34, #28b951);
+  background-image: -moz-linear-gradient(top, #81db34, #28b951);
+  background-image: -ms-linear-gradient(top, #81db34, #28b951);
+  background-image: -o-linear-gradient(top, #81db34, #28b951);
+  background-image: linear-gradient(to bottom, #81db34, #28b951);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+.status_btn2 {
+
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -moz-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -ms-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -o-linear-gradient(top, #ed13e9, #de1843);
+  background-image: linear-gradient(to bottom, #ed13e9, #de1843);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+</style>
+</head><body onload="javascript:mr_loadConfig();">
+<strong>Rolladen zur Gruppe hinzufuegen/entfernen</strong>
+<hr>
+<div id="status" class="status_btn1"></div>
+</body></html>
+
+

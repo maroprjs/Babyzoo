@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<!--meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="settings" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding"-->
+<title>Somfy Info</title>
+<script type="text/javascript" >
+
+
+function mr_loadConfig ()
+{
+
+
+	initializeAJAX();
+	getStatus();
+}
+
+function initializeAJAX()
+{
+	// Request erzeugen
+	if (window.XMLHttpRequest) {
+		myAjax = new XMLHttpRequest(); // Mozilla, Safari, Opera
+	} else if (window.ActiveXObject) {
+		try {
+			myAjax = new ActiveXObject('Msxml2.XMLHTTP'); // IE 5
+		} catch (e) {
+			try {
+				myAjax = new ActiveXObject('Microsoft.XMLHTTP'); // IE 6
+			} catch (e) {}
+		}
+	}
+}
+
+
+
+function my_click()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=info"  + "&action=set" + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+
+}
+
+function read_eeprom()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=info"  + "&action=read_eeprom" + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+
+}
+
+
+function getStatus()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=info"  + "&action=root_info" + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+}
+
+
+
+function responseCheck() 
+{
+	 if (myAjax.readyState==4 && myAjax.status==200)
+	{
+		 	var response = JSON.parse(myAjax.responseText);
+		if (response.status == "OK_info"){
+			document.getElementById('status').setAttribute("class","status_btn1");
+				document.getElementById('mr_content').textContent = response.content;
+		}; 
+	}
+}
+
+</script>
+<style>
+
+.btn_rainbowOn {
+
+  
+  -webkit-border-radius: 25;
+  -moz-border-radius: 25;
+  border-radius: 25px;
+  font-family: Arial;
+  color: #ffffff;
+
+
+  vertical-align: center; 
+  text-align: center;
+  width  :  50px;
+  height :50px;
+  font-size: 16px;
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #ed13e9, #95ed13);
+  background-image: -moz-linear-gradient(top, #ed13e9, #95ed13);
+  background-image: -ms-linear-gradient(top, #ed13e9, #95ed13);
+  background-image: -o-linear-gradient(top, #ed13e9, #95ed13);
+  background-image: linear-gradient(to bottom, #ed13e9, #95ed13);
+  text-decoration: none;
+  
+}
+.btn_rainbowOff {
+
+  
+  -webkit-border-radius: 25;
+  -moz-border-radius: 25;
+  border-radius: 25px;
+  font-family: Arial;
+  color: #ffffff;
+
+
+  vertical-align: center; 
+  text-align: center;
+  width  :  50px;
+  height :50px;
+  font-size: 16px;
+  background: #eeeeee;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #aaaaaa);
+  background-image: -moz-linear-gradient(top, #eeeeee, #aaaaaa);
+  background-image: -ms-linear-gradient(top, #eeeeee, #aaaaaa);
+  background-image: -o-linear-gradient(top, #eeeeee, #aaaaaa);
+  background-image: linear-gradient(to bottom, #eeeeee, #aaaaaa);
+  text-decoration: none;
+  
+}
+
+.status_btn1 {
+
+  background: #81db34;
+  background-image: -webkit-linear-gradient(top, #81db34, #28b951);
+  background-image: -moz-linear-gradient(top, #81db34, #28b951);
+  background-image: -ms-linear-gradient(top, #81db34, #28b951);
+  background-image: -o-linear-gradient(top, #81db34, #28b951);
+  background-image: linear-gradient(to bottom, #81db34, #28b951);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+.status_btn2 {
+
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -moz-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -ms-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -o-linear-gradient(top, #ed13e9, #de1843);
+  background-image: linear-gradient(to bottom, #ed13e9, #de1843);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+    .butt {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 3px 5px;
+    border: 1px solid #000;
+    background: #eee;
+}
+
+
+</style>
+</head><body onload="javascript:mr_loadConfig();">
+<strong>Info- und Statusseite</strong>
+<hr>
+<div id="status" class="status_btn1"></div>
+<br>
+<!--text id="mr_general_info"></text-->
+<br>
+<button class="butt" onclick="read_eeprom()">Show Eeprom</button>
+<br><br>
+<hr><br>
+<text id="mr_content">...text here...</text><br><br><br><hr><br>
+<input action="action" type="button" value="Back" onclick="history.go(-1);" style="width: 50px; height: 25px;" /> 
+</body></html>
+
+

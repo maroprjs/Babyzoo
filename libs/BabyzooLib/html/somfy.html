@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<!--meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="settings" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding"-->
+<title>Rolladensteuerung</title>
+<script src="somfyConfig.js" ></script>
+<script type="text/javascript" >
+	var currentChannel=1;
+	var numOfChannels=0;
+	var somfyGroup = "";
+	function mr_loadConfig ()
+	{
+		somfyGroup = somfyConfig;
+		getNumberOfChannels();
+		if (("channel" + currentChannel.toString() in somfyGroup)==true)
+		{
+		document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+		}
+		else
+		{
+			document.getElementById('mr_display').textContent = "keine Gruppe definiert!";
+		}
+		initializeAJAX();
+		getSensorReadings();
+	}
+
+	function initializeAJAX()
+	{
+		// Request erzeugen
+		if (window.XMLHttpRequest) {
+			myAjax = new XMLHttpRequest(); // Mozilla, Safari, Opera
+		} else if (window.ActiveXObject) {
+			try {
+				myAjax = new ActiveXObject('Msxml2.XMLHTTP'); // IE 5
+			} catch (e) {
+				try {
+					myAjax = new ActiveXObject('Microsoft.XMLHTTP'); // IE 6
+				} catch (e) {}
+			}
+		}
+	}
+
+
+	function getNumberOfChannels()
+	{
+		var maxFound = false;
+		var count = 0;
+		while (maxFound == false)
+		{
+			count++;
+			if  (("channel" + count.toString() in somfyGroup)==true){
+				numOfChannels++;
+			}
+			else
+			{
+				maxFound = true;
+			}
+		}
+		if (numOfChannels < currentChannel)//just in case
+		{
+			currentChannel = numOfChannels;	
+		}
+	}
+
+	function mr_scrollNext(){
+		currentChannel++;
+		if (("channel" + currentChannel.toString() in somfyGroup)==true)
+		{
+			document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+		}
+		else 
+		{
+			currentChannel = 1;
+			if (("channel" + currentChannel.toString() in somfyGroup)==true)
+			{
+				document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+			}
+			else
+			{
+				document.getElementById('mr_display').textContent = "keine Gruppe definiert!";
+			}
+		}
+	}
+
+	function mr_scrollPrevious(){
+		currentChannel--;	
+		if (("channel" + currentChannel.toString() in somfyGroup)==true)
+		{
+			document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+		}
+		else 
+		{
+			currentChannel = numOfChannels;
+			if (("channel" + currentChannel.toString() in somfyGroup)==true)
+			{
+				document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+			}
+			else
+			{
+				document.getElementById('mr_display').textContent = "keine Gruppe definiert!";
+			}
+		}
+	}
+
+
+
+	function setCookie(cname, cvalue, exdays)//Todo 
+	{//http://www.w3schools.com/js/js_cookies.asp
+   		var d = new Date();
+   		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+   		var expires = "expires="+ d.toUTCString();
+   		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	function getCookie(cname)//Todo 
+	{//http://www.w3schools.com/js/js_cookies.asp
+    	var name = cname + "=";
+    	var ca = document.cookie.split(';');
+    	for(var i = 0; i <ca.length; i++) {
+        	var c = ca[i];
+        	while (c.charAt(0)==' ') {
+            	c = c.substring(1);
+        	}
+        	if (c.indexOf(name) == 0) {
+          	  return c.substring(name.length,c.length);
+        	}
+    	}
+    	return "";
+	}
+
+	function checkCookie()//Todo 
+	{//http://www.w3schools.com/js/js_cookies.asp
+    	var username=getCookie("username");
+    	if (username!="") {
+       	 alert("Welcome again " + username);
+    	} else {
+        	username = prompt("Please enter your name:", "");
+        	if (username != "" && username != null) {
+           	 setCookie("username", username, 365);
+        	}
+    	}
+	}
+
+	function btnDn()
+	{
+		somfyClick("down");
+	}
+	
+	function btnUp()
+	{
+		somfyClick("up");	
+	}
+	
+	function btnMy()
+	{
+		somfyClick("my");
+	}
+	
+	function somfyClick(cmd)
+	{
+		if (!myAjax) 
+		{
+			alert("Konnte keine XMLHTTP-Instanz erzeugen");
+			return false;
+		} 
+		else 
+		{
+			myAjax.onreadystatechange=responseCheck;
+			var Url = "myfunction?"+"mode=normal" + "&cmd=" + cmd + "&channel=" + currentChannel + "&timestamp=" + new Date().getTime();
+			myAjax.open("GET",Url,true);
+			myAjax.send();
+			document.getElementById('mr_display').textContent = "waiting for server";
+		}
+	}
+
+	function getSensorReadings()
+	{
+		if (!myAjax) 
+		{
+			alert("Konnte keine XMLHTTP-Instanz erzeugen");
+			return false;
+		} 
+		else 
+		{
+			myAjax.onreadystatechange=responseCheck;
+			var Url = "myfunction?"+"mode=sensor" + "&timestamp=" + new Date().getTime();
+			myAjax.open("GET",Url,true);
+			myAjax.send();
+		}
+	}
+
+	
+	function responseCheck() 
+	{
+   	 if (myAjax.readyState==4 && myAjax.status==200)
+		{
+   		 	var response = JSON.parse(myAjax.responseText);
+			if (response.status == "OK_normal"){
+				  document.getElementById('mr_display').textContent = somfyGroup["channel" + currentChannel.toString()].name;
+			}else if (response.status == "OK_sensor"){
+				//document.getElementById('mr_display').textContent = "NOK " + myAjax.responseText;
+				//console.log(response);
+				//console.log(response.status);
+				//console.log(response.content);
+				document.getElementById('mr_sensor').textContent = response.content;
+				
+				
+			}; 
+		}
+	}
+
+
+  </script>
+  
+<style type="text/css" media="screen, print, projection">
+
+	.btn_my {
+		background: #3498db;
+  		background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  		background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  		background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  		background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  		background-image: linear-gradient(to bottom, #3498db, #2980b9);
+   		-webkit-border-radius: 125;
+  		-moz-border-radius: 125;
+  		border-radius: 125px;
+  		font-family: "Courier New";
+  		color: #ffffff;
+  		width  :  150px;
+  		height :150px;
+  		vertical-align: center; 
+  		text-align: center;
+  		width  :  150px;
+  		height :150px;
+  		font-size: 16px;
+	}
+
+	.btn_my:hover {
+  		background: #3cb0fd;
+  		background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  		background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  		background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  		background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  		background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  		text-decoration: none;
+	}
+
+	.btn_up{
+		fill: url(#gradient-2);
+	}
+
+	.btn_up:hover {
+  		fill: url(#gradient-12);
+	}
+
+	.btn_up:active {
+	  	fill: url(#gradient-3);
+	}
+
+	.btn_my{
+		fill: url(#gradient-12);
+	}
+
+	.btn_my:hover {
+  		fill: url(#gradient-1);
+	}
+	
+	.btn_my:active {
+  		fill: url(#gradient-3);
+	}
+
+	.btn_dn{
+		fill: url(#gradient-1);
+	}
+
+	.btn_dn:hover {
+  		fill: url(#gradient-12);
+	}
+
+	.btn_dn:active {
+  		fill: url(#gradient-3);
+	}
+	
+	.btn_grp{
+		fill: url(#gradient-10);	
+	}
+
+	.btn_grp:hover {
+		fill: url(#gradient-11);
+	}
+
+	.btn_grp:active {
+  		fill: url(#gradient-3);
+	}
+
+</style>
+</head><body onload="javascript:mr_loadConfig();">
+<svg viewBox="90 -3 337 541" width="300" height="425" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <radialGradient id="gradient-2" gradientUnits="userSpaceOnUse" cx="245.49" cy="148.823" r="40.728" gradientTransform="matrix(1, 0, 0, 1, 10.767654, 40.48291)">
+      <stop offset="0" style="stop-color: rgba(88, 102, 234, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(25, 42, 195, 1)"></stop>
+    </radialGradient>
+    <radialGradient id="gradient-1" gradientUnits="userSpaceOnUse" cx="245.49" cy="148.823" r="40.728" gradientTransform="matrix(1, 0, 0, 1, 10.60466, 268.787994)">
+      <stop offset="0" style="stop-color: rgba(88, 102, 234, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(25, 42, 195, 1)"></stop>
+    </radialGradient>
+    <radialGradient id="gradient-3" gradientUnits="userSpaceOnUse" cx="245.49" cy="148.823" r="40.728" gradientTransform="matrix(1, 0, 0, 1, 10.60466, 268.787994)">
+      <stop offset="0" style="stop-color: rgba(224,224,224, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(153,153,153, 1)"></stop>
+    </radialGradient>
+    <style id="bx-google-fonts">@import url(https://fonts.googleapis.com/css?family=Abril+Fatface:400|Caveat:400,700|Princess+Sofia:400);</style>
+    <symbol id="symbol-0" viewBox="0 0 100 100"></symbol>
+    <linearGradient id="gradient-10" gradientUnits="userSpaceOnUse" x1="150.549" y1="85.032" x2="150.549" y2="175.948" gradientTransform="matrix(1, 0, 0, 1, 0.000052, 0.000183)">
+      <stop offset="0" style="stop-color: rgba(82, 155, 232, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(25, 103, 187, 1)"></stop>
+    </linearGradient>
+    <linearGradient id="gradient-11" gradientUnits="userSpaceOnUse" x1="148.718" y1="84.734" x2="148.718" y2="175.332" gradientTransform="matrix(1.000001, 0, 0, 1, -0.000312, 0.000061)">
+      <stop offset="0" style="stop-color: rgba(82, 155, 232, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(25, 103, 187, 1)"></stop>
+    </linearGradient>
+    <radialGradient id="gradient-12" gradientUnits="userSpaceOnUse" cx="255.391" cy="303.459" r="63.099">
+      <stop offset="0" style="stop-color: rgba(101, 129, 230, 1)"></stop>
+      <stop offset="1" style="stop-color: rgba(32, 68, 197, 1)"></stop>
+    </radialGradient>
+  </defs>
+  <rect x="139.018" y="21.562" width="281.738" height="455.972" transform="matrix(0.999998, 0.001856, -0.001856, 0.999998, -21.28645, -1.630991)" style="fill-rule: evenodd; fill: rgb(225, 236, 236);"></rect>
+  <rect x="122.969" y="60.809" width="238.698" height="317.792" transform="matrix(1, 0.000837, 0, 1, 14.351396, 83.540498)" style="fill: rgb(206, 215, 218);"></rect>
+  <ellipse class="btn_up" onclick="btnUp()" cx="256.258" cy="189.306" rx="40.728" ry="41.302"></ellipse>
+  <ellipse class="btn_my" onclick="btnMy()" cx="255.391" cy="303.459" rx="63.099" ry="60.231"></ellipse>
+  <path d="M 256.362 156.035 L 265.125 168.088 L 247.598 168.088 L 256.362 156.035 Z" style="fill: rgb(222, 232, 231);" bx:shape="triangle 247.598 156.035 17.527 12.053 0.5 0 1@c1b2de71"></path>
+  <ellipse class="btn_dn" onclick="btnDn()" cx="256.095" cy="417.611" rx="40.728" ry="41.302"></ellipse>
+  <path d="M 255.505 -449.733 L 265.284 -436.74 L 245.726 -436.74 L 255.505 -449.733 Z" style="fill: rgb(222, 232, 231);" transform="matrix(1, 0, 0, -1, 0, 0)" bx:shape="triangle 245.726 -449.733 19.558 12.993 0.5 0 1@82965dd5"></path>
+  <text x="231.561" y="308.621" transform="matrix(0.980422, 0, 0, 0.546091, 6.468337, 137.141373)" style="fill: rgb(232, 237, 228); font-family: &quot;Abril Fatface&quot;; font-size: 32.9615px; white-space: pre;">my</text>
+  <path d="M 384.23 177.722 Z" style="stroke: black; fill: none;"></path>
+  <rect x="140.707" y="34.303" width="231.458" height="44.895" style="fill: rgb(241, 241, 241); stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke: rgb(218, 205, 85);"></rect>
+  <text y="144.912" x="211.89" transform="matrix(0.911896, 0, 0, 0.861067, 51.854679, 70.328537)" style="fill: rgb(232, 237, 228); font-family: &quot;Abril Fatface&quot;; font-size: 18.5816px; white-space: pre;">Up</text>
+  <text y="374.995" x="209.906" transform="matrix(0.891902, 0, 0, 0.91664, 57.908302, 79.121544)" style="fill: rgb(232, 237, 228); font-family: &quot;Abril Fatface&quot;; font-size: 17.4551px; white-space: pre;">Dn</text>
+  <rect  style="fill: rgb(216, 216, 216);"></rect>
+  <text x="241.91" y="114.057" style="fill: rgb(138, 149, 150); font-family: &quot;Princess Sofia&quot;; font-size: 16px; font-style: italic; white-space: pre;">group</text>
+  <path d="M 0 0 L 0 0 L 0 0 L 0 0 Z" style="fill: rgb(216, 216, 216);"  bx:shape="triangle 0 0 0 0 0.5 0 1@41ae5ad3"></path>
+  <path d="M 0 0 L 0 0 L 0 0 L 0 0 Z" style="fill: rgb(216, 216, 216);"  bx:shape="triangle 0 0 0 0 0.5 0 1@41ae5ad3"></path>
+  <defs>
+    <style id="bx-google-fonts">@import url(https://fonts.googleapis.com/css?family=Abril+Fatface:400|Princess+Sofia:400);</style>
+  </defs>
+  <path class="btn_grp" onclick="javascript:mr_scrollNext();" d="M 150.549 85.032 L 178.285 175.948 L 122.812 175.948 L 150.549 85.032 Z" transform="matrix(0.001197, 0.999999, -0.999999, 0.001195, 458.241908, -37.244397)" bx:shape="triangle 122.812 85.032 55.473 90.916 0.5 0 1@74139b7d"></path>
+  <path class="btn_grp" onclick="javascript:mr_scrollPrevious();" d="M 148.718 84.734 L 176.117 175.332 L 121.319 175.332 L 148.718 84.734 Z" transform="matrix(0.001197, 0.999999, 0.999999, -0.001195, 53.80449, -34.370773)" bx:shape="triangle 121.319 84.734 54.798 90.598 0.5 0 1@4054dd3a"></path>
+  <text id="mr_display" x="146.411" y="65.452" style="fill: rgb(141, 141, 144); font-family: Caveat; font-size: 28px; white-space: pre;"></text>
+  <defs>
+    <style id="bx-google-fonts">@import url(https://fonts.googleapis.com/css?family=Abril+Fatface:400|Caveat:400,700|Princess+Sofia:400);</style>
+  </defs>
+  <a href="./index.html"><text id="mr_sensor" x="543.647" y="475.304" transform="matrix(1, 0, 0, 0.999999, -446.96756, 36.000404)" style="fill: rgb(141, 141, 144); font-family: Caveat; font-size: 20px; white-space: pre;">test2 </text></a>
+</svg>
+
+</body></html>

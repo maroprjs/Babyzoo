@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<!--meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="settings" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding"-->
+<title>Somfy Substitution</title>
+<script type="text/javascript" >
+
+function mr_loadConfig ()
+{
+
+
+	initializeAJAX();
+	//interval = setInterval(getStatus,10000);
+	//getStatus();
+}
+
+function initializeAJAX()
+{
+	// Request erzeugen
+	if (window.XMLHttpRequest) {
+		myAjax = new XMLHttpRequest(); // Mozilla, Safari, Opera
+	} else if (window.ActiveXObject) {
+		try {
+			myAjax = new ActiveXObject('Msxml2.XMLHTTP'); // IE 5
+		} catch (e) {
+			try {
+				myAjax = new ActiveXObject('Microsoft.XMLHTTP'); // IE 6
+			} catch (e) {}
+		}
+	}
+}
+
+function substitute()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=substitute"  + "&action=set" + "&idx=" + document.getElementById("idx").value + "&address=" + document.getElementById("address").value + "&roll=" + document.getElementById("roll").value + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+
+}
+
+
+function responseCheck() 
+{
+	 if (myAjax.readyState==4 && myAjax.status==200)
+	{
+		 	var response = JSON.parse(myAjax.responseText);
+		if (response.status == "OK_substitute"){
+				document.getElementById('status').setAttribute("class","status_btn1");
+				//toDo: weiterleitung zu somfy eeprom
+				document.getElementById("mr_general_info").innerHTML = "Neue Werte gespeichert!";
+		}; 
+	}
+}
+
+</script>
+<style>
+
+
+
+.status_btn1 {
+
+  background: #81db34;
+  background-image: -webkit-linear-gradient(top, #81db34, #28b951);
+  background-image: -moz-linear-gradient(top, #81db34, #28b951);
+  background-image: -ms-linear-gradient(top, #81db34, #28b951);
+  background-image: -o-linear-gradient(top, #81db34, #28b951);
+  background-image: linear-gradient(to bottom, #81db34, #28b951);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  15px;
+  height :15px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+.status_btn2 {
+
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -moz-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -ms-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -o-linear-gradient(top, #ed13e9, #de1843);
+  background-image: linear-gradient(to bottom, #ed13e9, #de1843);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+.status_btn3 {
+
+  background: #5569e8;
+  background-image: -webkit-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -moz-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -ms-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -o-linear-gradient(top, #5569e8, #101c6d7);
+  background-image: linear-gradient(to bottom, #5569e8, #101c6d);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  20px;
+  height :20px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+    .butt {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 3px 5px;
+    border: 1px solid #000;
+    background: #eee;
+}
+
+
+</style>
+</head><body onload="javascript:mr_loadConfig();">
+<strong>Substitution vorhandener Fernbedienungen</strong>
+<hr>
+1. Adresse und Rollcode durch Somfy Receive <br>
+2. index von 0-9 (0 = erste Fernbedienung, 1 = zweite, usw.) <br>
+3. SomfyInfo - Eepromseite zeigt, ob Werte uebernommen wurden. <br> <br>
+<div id="status" class="status_btn1"></div>
+<text id="mr_general_info"></text>
+<br>Index:<br>
+<input type="text" id="idx" name="idx" size="1" maxlength="1" min="0" max="9" step="1" pattern="[0-9]{1}" placeholder="0">
+&nbsp
+<br><br>Adresse:<br>
+<input type="text" id="address" name="address" size="10" maxlength="10"  step="1" pattern="[0-9]{10}" placeholder="0000000000">
+&nbsp
+<br><br>Rollcode:<br>
+<input type="text" id="roll" name="roll" size="10" maxlength="10"  step="1" pattern="[0-9]{10}" placeholder="0000000000">
+&nbsp
+<br><br><button class="butt" onclick="substitute()">Speichern</button>
+&nbsp;&nbsp
+<!--button class="butt" onclick="receiveText()">Receive</button-->
+<br><br>
+<hr><br>
+<input action="action" type="button" value="Back" onclick="history.go(-1);" style="width: 50px; height: 25px;" /> 
+</body></html>
+
+

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<!--meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="settings" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding"-->
+<title>Somfy Receive</title>
+<script type="text/javascript" >
+var flip = false;
+
+function mr_loadConfig ()
+{
+
+
+	initializeAJAX();
+	interval = setInterval(getStatus,10000);
+	getStatus();
+}
+
+function initializeAJAX()
+{
+	// Request erzeugen
+	if (window.XMLHttpRequest) {
+		myAjax = new XMLHttpRequest(); // Mozilla, Safari, Opera
+	} else if (window.ActiveXObject) {
+		try {
+			myAjax = new ActiveXObject('Msxml2.XMLHTTP'); // IE 5
+		} catch (e) {
+			try {
+				myAjax = new ActiveXObject('Microsoft.XMLHTTP'); // IE 6
+			} catch (e) {}
+		}
+	}
+}
+
+function getStatus()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+ 
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=receive"  + "&action=check" + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+}
+
+function responseCheck() 
+{
+	 if (myAjax.readyState==4 && myAjax.status==200)
+	{
+		 	var response = JSON.parse(myAjax.responseText);
+		if (response.status == "OK_receive"){
+			if (flip == false) {
+				document.getElementById('status').setAttribute("class","status_btn1");
+				flip = true;
+			}
+			else {
+				document.getElementById('status').setAttribute("class","status_btn3");	
+				flip = false;
+			}
+				document.getElementById('mr_datagram').textContent = response.receive;
+				document.getElementById('mr_calibrate').textContent = response.calibrate;
+		}; 
+	}
+}
+
+function calibrateText()
+{
+	if (!myAjax) 
+	{
+		alert("Konnte keine XMLHTTP-Instanz erzeugen");
+		return false;
+	} 
+	else 
+	{
+		myAjax.onreadystatechange=responseCheck;
+		var Url = "myfunction?"+"mode=receive"  + "&action=set" + "&ook=" + document.getElementById("th_ook").value + "&timestamp=" + new Date().getTime();
+		myAjax.open("GET",Url,true);
+		myAjax.send();
+		document.getElementById('status').setAttribute("class","status_btn2");
+	}
+
+}
+
+</script>
+<style>
+
+
+
+.status_btn1 {
+
+  background: #81db34;
+  background-image: -webkit-linear-gradient(top, #81db34, #28b951);
+  background-image: -moz-linear-gradient(top, #81db34, #28b951);
+  background-image: -ms-linear-gradient(top, #81db34, #28b951);
+  background-image: -o-linear-gradient(top, #81db34, #28b951);
+  background-image: linear-gradient(to bottom, #81db34, #28b951);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  15px;
+  height :15px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+.status_btn2 {
+
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -moz-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -ms-linear-gradient(top, #ed13e9, #de1843);
+  background-image: -o-linear-gradient(top, #ed13e9, #de1843);
+  background-image: linear-gradient(to bottom, #ed13e9, #de1843);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  10px;
+  height :10px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+.status_btn3 {
+
+  background: #5569e8;
+  background-image: -webkit-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -moz-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -ms-linear-gradient(top, #5569e8, #101c6d);
+  background-image: -o-linear-gradient(top, #5569e8, #101c6d7);
+  background-image: linear-gradient(to bottom, #5569e8, #101c6d);
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #ffffff;
+  width  :  20px;
+  height :20px;
+
+  vertical-align: center; 
+  text-align: center;
+
+  font-size: 16px;
+
+  
+}
+
+    .butt {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 3px 5px;
+    border: 1px solid #000;
+    background: #eee;
+}
+
+
+</style>
+</head><body onload="javascript:mr_loadConfig();">
+<strong>Empfänger</strong>
+<br><text>Leseintervall beträgt 10s</text>
+<hr>
+<div id="status" class="status_btn1"></div>
+<br>
+<text id="mr_general_info"></text>
+<br>OOK Schwellwert:
+<input type="text" id="th_ook" name="th_ook" size="2" maxlength="2" min="0" max="100" step="1" pattern="[0-9]{2}" placeholder="32">
+&nbsp
+<button class="butt" onclick="calibrateText()">Speichern</button>
+&nbsp;&nbsp
+<!--button class="butt" onclick="receiveText()">Receive</button-->
+<br><br>
+<hr><br>
+<text id="mr_calibrate">...text here...</text><br><br>
+<hr><br>
+<text id="mr_datagram">...text here...</text><br><br><br><hr><br>
+<input action="action" type="button" value="Back" onclick="history.go(-1);" style="width: 50px; height: 25px;" /> 
+</body></html>
+
+

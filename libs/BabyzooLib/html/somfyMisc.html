@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<!--meta name="settings" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding"-->
+
+<title>Somfy additional Settings</title>
+<style>
+    a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 3px 5px;
+    border: 1px solid #000;
+    background: #eee;
+}
+</style>
+</head><body>
+<strong>Somfy Zusatz</strong>
+<hr><br>
+<form action="myfunction">
+<input type="text" name="mode" value="misc_settings" readonly style="border-style:none;background-color:white;color:white">
+<br>
+  tx power<br> (level 0-31 coresponds to -18 to +13 dBm):<br>
+  <input type="text" name="tx" size="2" maxlength="2" min="0" max="31" step="1" pattern="[0-9]{2}" placeholder="05" required><br>
+  <br>frequency[Mhz] x 100:<br>
+  <input type="text" name="freq" size="5" maxlength="5" min="42000" max="44000" step="1" pattern="[0-9]{5}" placeholder="43342" required>
+  <br><br>default number of symbol repetitions:<br>
+  <input type="text" name="rep" size="1" maxlength="1" min="1" max="9" step="1" pattern="[0-9]{1}" placeholder="2" required><br>
+  <br><br>PulseTiming:<br>
+  <input type="radio" name="pulses" value="cul" checked> cul<br>
+  <input type="radio" name="pulses" value="forum"> forum<br>
+  <input type="radio" name="pulses" value="thomas"> th <br><br>
+  <input type="submit" name="save_misc" value="Speichern">
+</form>
+<br>
+<br>
+<input action="action" type="button" value="Back" onclick="history.go(-1);" style="width: 50px; height: 25px;" /> 
+</body></html>
+
+
