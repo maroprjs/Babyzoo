@@ -22,13 +22,11 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  
   * Some pins are free for temperature sensor, light sensor and driving a rainbow led:
   
- <img src="libs/BabyzooLib/docs/schematic.png" alt="schematic" width="480" height="360"> 
- 
+  <img src="libs/BabyzooLib/docs/turtle1.png" alt="web interface" width="240" height="135"><img src="libs/BabyzooLib/docs/turtle4.png" alt="web interface" width="240" height="135"><img src="libs/BabyzooLib/docs/turtle5.png" alt="web interface" width="240" height="135">
+   
   * The Web Interface like this:
   
-  <img src="libs/BabyzooLib/docs/somfy1.png" alt="web interface" width="240" height="135"> 
-  <img src="libs/BabyzooLib/docs/somfy4.png" alt="web interface" width="240" height="135"> 
-  <img src="libs/BabyzooLib/docs/somfy5.png" alt="web interface" width="240" height="135"> 
+<img src="libs/BabyzooLib/docs/somfy2.png" alt="web interface" width="230" height="360"> 
  
  * ..also controllable via apple's voice control Siri using homebridge.....-
  
