@@ -30,6 +30,14 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  
  * ..also controllable via apple's voice control Siri using homebridge.....the plugin can be found here: https://github.com/maroprjs/Babyzoo/tree/master/voice_controlled/siri/somfy
  
+ Raspberry Pi can be used to host the NodeJs server:
+  <img src="libs/BabyzooLib/docs/SiriFlow.png" alt="web interface" width="345" height="360"> 
+  
+  The plugin is modified version of: https://www.npmjs.com/package/homebridge-real-fake-garage-doors
+  There are also info's about homebridge installation. 
+  
+  
+ 
  
  
  
@@ -52,5 +60,6 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  *  -https://github.com/pfeerick/elapsedMillis
  *  -Adafruit (https://github.com/adafruit/DHT-sensor-library)
  *  -Arduino/ESP8266 contributers
+ *  -Hombridge contributers (https://github.com/nfarina/homebridge, https://github.com/plasticrake/homebridge-real-fake-garage-doors and precessors of these projects)
  *  -?
  
