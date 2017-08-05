@@ -45,7 +45,7 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  *more pics and screen shots are here: https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib/docs
  
  
- ## How to build?
+ <h2> How to build? </h2>
  
  
   
