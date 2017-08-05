@@ -1,6 +1,7 @@
 # Babyzoo
 A Somfy Remote Control for roller shutters, build into a Babyzoo nightlight, using ESP8266 &amp; RFM69
 
+<img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle7.png">
 
  * This project aims to control Somfy branded window roller shutters via ESP8266 Wifi Modul.
  *
