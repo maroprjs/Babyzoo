@@ -1,14 +1,17 @@
 # Babyzoo
-A Somfy Remote Control for roller shutters, build into a Babyzoo nightlight, using ESP8266 &amp; RFM69
+A Somfy Remote Control for roller shutters, build into a Babyzoo nightlight, using ESP8266 Wifi Module &amp; RFM69
+
+<img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle3.png">
+
+In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
 
 <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle7.png">
 
- * This project aims to control Somfy branded window roller shutters via ESP8266 Wifi Modul.
  *
  * Traditional Somfy remotes work within 400Mhz ISM band, which makes it difficult
  * to control elements from e.g. mobile phone or computer.
  *
- * Since ESP8266 Wifi Module can implement a whole http server functionality hence its
+ * ESP8266 Wifi Module embeds a whole http server functionality hence its
  * interfaces can be controlled through a WLAN enabled device with Web Browser, it is
  * a good candidate to be used as an emulator for Somfy branded remotes.
  * For that purpose it needs to control an appropriate radio module within 400Mhz band.
