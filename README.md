@@ -18,11 +18,9 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  * In this project an RFM69 module is used, bought from some online electronic store. It
  * is controlled via SPI interface.
  
- ![1](https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/schematic.png)
+ <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/schematic.png" alt="Adafruit Huzzah and RFM69" width="326" height="184"/>
  
  
- *
- *
  * Thanks to:
  *  -https://pushstack.wordpress.com/somfy-rts-protocol/
  *  -https://forum.arduino.cc/index.php?topic=208346.60
