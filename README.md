@@ -46,38 +46,39 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  
  
  <h2> How to build? </h2>
- If Arduino IDE is used, the content from https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib and https://github.com/maroprjs/Babyzoo/tree/master/deployment/RCSomfyRFM69 need to be copied into the same project folder. <br>
+ If Arduino IDE is used, the content from https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib and https://github.com/maroprjs/Babyzoo/tree/master/deployment/RCSomfyRFM69 need to be copied into the same project folder. <br><br>
  Make sure following libraries are installed: <br>
  * ESP8266 board environment<br>
  * OOK library: original https://github.com/kobuki/RFM69OOK/ (original)<br>
- * 	-> but use xmas2016 branch from https://github.com/maroprjs/RFM69OOK.git (this contains adapted changes for ESP8266)<br>
+  	--> but use xmas2016 branch from https://github.com/maroprjs/RFM69OOK.git (this contains adapted changes for ESP8266)<br>
  * myWebServer library and dependent from: https://github.com/nailbuster/myWebServer.git (original)<br>
- *  -> use xmas2016 branch from https://github.com/maroprjs/myWebServer.git (this contains slight changes for password handling)<br>
- *
+   --> use xmas2016 branch from https://github.com/maroprjs/myWebServer.git (this contains slight changes for password handling)<br>
+   --->make sure you use ArduinoJson version below or equal v5.8.0!<br>
+ *<br>
  * elapsedMillis from:  https://github.com/pfeerick/elapsedMillis<br>
- *
+ *<br>
  * DHT & sensor library from Adafruit:<br>
  * 					https://github.com/adafruit/DHT-sensor-library.git<br>
  * 					https://github.com/adafruit/Adafruit_Sensor.git<br>
  <br>
- Once the software is running on ESP8266 module, the html files need to be uploaded to http://<esp8266_ip_address>.browse. <br>
+ Once the software is running on ESP8266 module, the html files need to be uploaded to http://<esp8266_ip_address>.browse. <br><br>
  
  For being able to control the shutter via Apples Homekit App, respectively Siri voice service, a NodeJs server needs to be setup with homebridge installed. Follow the instructions from here https://www.npmjs.com/package/homebridge-real-fake-garage-doors and replace index.js and config file with that one here: https://github.com/maroprjs/Babyzoo/tree/master/voice_controlled/siri/somfy
  <br>
  
   
  <h2> Recognition</h2>
- * Thanks to:
- *  -https://pushstack.wordpress.com/somfy-rts-protocol/
- *  -https://forum.arduino.cc/index.php?topic=208346.60
- *  -fhem cul http://culfw.de/culfw.html
- *  -https://github.com/kobuki/RFM69OOK
- *  -https://github.com/nailbuster/myWebServer
- *  -https://github.com/PaulStoffregen/Time
- *  -https://github.com/bblanchon/ArduinoJson.git version <= v5.8.0
- *  -https://github.com/pfeerick/elapsedMillis
- *  -Adafruit (https://github.com/adafruit/DHT-sensor-library)
- *  -Arduino/ESP8266 contributers
- *  -Hombridge contributers (https://github.com/nfarina/homebridge, https://github.com/plasticrake/homebridge-real-fake-garage-doors and precessors of these projects)
- *  -?
+ * Thanks to:<br>
+ *  -https://pushstack.wordpress.com/somfy-rts-protocol/<br>
+ *  -https://forum.arduino.cc/index.php?topic=208346.60<br>
+ *  -fhem cul http://culfw.de/culfw.html<br>
+ *  -https://github.com/kobuki/RFM69OOK<br>
+ *  -https://github.com/nailbuster/myWebServer<br>
+ *  -https://github.com/PaulStoffregen/Time<br>
+ *  -https://github.com/bblanchon/ArduinoJson.git version <= v5.8.0<br>
+ *  -https://github.com/pfeerick/elapsedMillis<br>
+ *  -Adafruit (https://github.com/adafruit/DHT-sensor-library)<br>
+ *  -Arduino/ESP8266 contributers<br>
+ *  -Hombridge contributers (https://github.com/nfarina/homebridge, https://github.com/plasticrake/homebridge-real-fake-garage-doors and precessors of these projects)<br>
+ *  -?<br>
  
