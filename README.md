@@ -46,21 +46,21 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  
  
  <h2> How to build? </h2>
- If Arduino IDE is used, the content from https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib and https://github.com/maroprjs/Babyzoo/tree/master/deployment/RCSomfyRFM69 need to be copied into the same project folder. 
- Make sure following libraries are installed: 
- * ESP8266 board environment
- * OOK library: original https://github.com/kobuki/RFM69OOK/ (original)
- * 	-> but use xmas2016 branch from https://github.com/maroprjs/RFM69OOK.git (this contains adapted changes for ESP8266)
- * myWebServer library and dependent from: https://github.com/nailbuster/myWebServer.git (original)
- *  -> use xmas2016 branch from https://github.com/maroprjs/myWebServer.git (this contains slight changes for password handling)
+ If Arduino IDE is used, the content from https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib and https://github.com/maroprjs/Babyzoo/tree/master/deployment/RCSomfyRFM69 need to be copied into the same project folder. <br>
+ Make sure following libraries are installed: <br>
+ * ESP8266 board environment<br>
+ * OOK library: original https://github.com/kobuki/RFM69OOK/ (original)<br>
+ * 	-> but use xmas2016 branch from https://github.com/maroprjs/RFM69OOK.git (this contains adapted changes for ESP8266)<br>
+ * myWebServer library and dependent from: https://github.com/nailbuster/myWebServer.git (original)<br>
+ *  -> use xmas2016 branch from https://github.com/maroprjs/myWebServer.git (this contains slight changes for password handling)<br>
  *
- * elapsedMillis from:  https://github.com/pfeerick/elapsedMillis
+ * elapsedMillis from:  https://github.com/pfeerick/elapsedMillis<br>
  *
- * DHT & sensor library from Adafruit:
- * 					https://github.com/adafruit/DHT-sensor-library.git
- * 					https://github.com/adafruit/Adafruit_Sensor.git
+ * DHT & sensor library from Adafruit:<br>
+ * 					https://github.com/adafruit/DHT-sensor-library.git<br>
+ * 					https://github.com/adafruit/Adafruit_Sensor.git<br>
  <br>
- Once the software is running on ESP8266 module, the html files need to be uploaded to http://<esp8266_ip_address>.browse. 
+ Once the software is running on ESP8266 module, the html files need to be uploaded to http://<esp8266_ip_address>.browse. <br>
  
  For being able to control the shutter via Apples Homekit App, respectively Siri voice service, a NodeJs server needs to be setup with homebridge installed. Follow the instructions from here https://www.npmjs.com/package/homebridge-real-fake-garage-doors and replace index.js and config file with that one here: https://github.com/maroprjs/Babyzoo/tree/master/voice_controlled/siri/somfy
  <br>
