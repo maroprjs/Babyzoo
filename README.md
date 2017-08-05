@@ -26,7 +26,8 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
    
   * The Web Interface like this:
   
-  <img src="libs/BabyzooLib/docs/somfy2.png" alt="web interface" width="230" height="360"> or <img src="libs/BabyzooLib/docs/somfy.png" alt="web interface" width="230" height="360">
+  <img src="libs/BabyzooLib/docs/somfy2.png" alt="web interface" width="230" height="360"> or <img src="libs/BabyzooLib/docs/somfy.png" alt="web interface" width="230" height="360"><br>
+  The html source at: https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib/html
  
  * ..also controllable via apple's voice control Siri using homebridge.....the plugin can be found here: https://github.com/maroprjs/Babyzoo/tree/master/voice_controlled/siri/somfy
  
@@ -41,10 +42,10 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  
  
  
- *more pics are here: https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib/docs
+ *more pics and screen shots are here: https://github.com/maroprjs/Babyzoo/tree/master/libs/BabyzooLib/docs
  
  
- 
+ ## How to build?
  
  
   
