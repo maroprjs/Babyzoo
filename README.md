@@ -1,7 +1,7 @@
 # Babyzoo
 A Somfy Remote Control for roller shutters, build into a Babyzoo nightlight, using ESP8266 Wifi Module &amp; RFM69
 
-<img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle3.png" alt="babyzoo turtle" width="326" height="184"/>
+<img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle3.png" alt="babyzoo turtle" width="326" height="184" class="inline"/>
 
 In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
 
