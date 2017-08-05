@@ -7,7 +7,6 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
 
 <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/turtle7.png" alt="Mountain View" style="width:304px;height:228px;">
 
- *
  * Traditional Somfy remotes work within 400Mhz ISM band, which makes it difficult
  * to control elements from e.g. mobile phone or computer.
  *
@@ -18,6 +17,7 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  *
  * In this project an RFM69 module is used, bought from some online electronic store. It
  * is controlled via SPI interface.
+ <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/schematic.png" alt="Mountain View" style="width:304px;height:228px;">
  *
  *
  * Thanks to:
