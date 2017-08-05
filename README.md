@@ -17,7 +17,10 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  *
  * In this project an RFM69 module is used, bought from some online electronic store. It
  * is controlled via SPI interface.
- <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/schematic.png" alt="schamtic" width="326" height="184">
+ 
+ <img src="https://github.com/maroprjs/Babyzoo/blob/master/libs/BabyzooLib/docs/schematic.png" alt="schematic" width="326" height="184">
+ 
+ 
  *
  *
  * Thanks to:
