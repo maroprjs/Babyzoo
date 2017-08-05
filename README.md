@@ -61,7 +61,7 @@ In this example Adafruit Huzzah Feather and self-made RFM69-feather on-top.
  * 					https://github.com/adafruit/DHT-sensor-library.git<br>
  * 					https://github.com/adafruit/Adafruit_Sensor.git<br>
  <br>
- Once the software is running on ESP8266 module, the html files need to be uploaded to http://esp8266_ip_address.browse. <br><br>
+ Once the software is running on ESP8266 module, the html files need to be uploaded to http://esp8266_ip_address/browse. <br><br>
  
  For being able to control the shutter via Apples Homekit App, respectively Siri voice service, a NodeJs server needs to be setup with homebridge installed. Follow the instructions from here https://www.npmjs.com/package/homebridge-real-fake-garage-doors and replace index.js and config file with that one here: https://github.com/maroprjs/Babyzoo/tree/master/voice_controlled/siri/somfy
  <br>
